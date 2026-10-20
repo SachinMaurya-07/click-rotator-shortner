@@ -1,0 +1,11 @@
+# Local configuration and secrets
+/config.php
+
+# Runtime data (may contain private destination URLs and click statistics)
+/data/links.json
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

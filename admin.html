@@ -1,0 +1,980 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>Click Rotation Admin</title>
+
+<style>
+:root {
+    --bg: #0b1020;
+    --card: #121a2b;
+    --field: #0b1220;
+    --border: #29364d;
+    --text: #edf2ff;
+    --muted: #91a0b8;
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --radius: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 36px 22px 60px;
+    color: var(--text);
+    background:
+        radial-gradient(ellipse at top left, #1b2450 0, transparent 42%),
+        var(--bg);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(27px, 4vw, 38px);
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+h1 span {
+    color: #818cf8;
+}
+
+.subtitle {
+    margin: 9px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+h2 {
+    margin: 0 0 20px;
+    font-size: 20px;
+    letter-spacing: -0.4px;
+}
+
+.card {
+    min-width: 0;
+    margin-bottom: 20px;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: linear-gradient(145deg, #162034, #101828);
+    box-shadow: 0 12px 35px #00000020;
+}
+
+.login-card {
+    max-width: 440px;
+    margin: 60px auto;
+    padding: 32px;
+}
+
+.login-icon {
+    display: grid;
+    width: 54px;
+    height: 54px;
+    margin-bottom: 22px;
+    place-items: center;
+    border: 1px solid #4544a9;
+    border-radius: 15px;
+    background: #272657;
+    color: #c7d2fe;
+    font-size: 25px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.create-grid {
+    grid-template-columns: 1.2fr 1fr 0.8fr;
+}
+
+label {
+    display: block;
+    min-width: 0;
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+input,
+textarea,
+select {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px 14px;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    outline: none;
+    background: var(--field);
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #64748b;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px #6366f126;
+}
+
+input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.8;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+}
+
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: var(--primary);
+    color: white;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    background: var(--primary-hover);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+}
+
+button.secondary {
+    border-color: var(--border);
+    background: #1a263b;
+    color: var(--text);
+}
+
+button.secondary:hover {
+    background: #26344d;
+}
+
+button.danger {
+    border-color: #7f292f;
+    background: #3b1720;
+    color: #fca5a5;
+}
+
+button.danger:hover {
+    background: #b91c1c;
+    color: white;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid #a5b4fc;
+    outline-offset: 3px;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.toolbar h2 {
+    margin: 0;
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.link-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.link-heading h2 {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.slug {
+    display: inline-block;
+    margin-top: 7px;
+    color: #a5b4fc;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status {
+    flex-shrink: 0;
+    padding: 5px 10px;
+    border: 1px solid #285c45;
+    border-radius: 20px;
+    background: #123526;
+    color: #86efac;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.status.disabled {
+    border-color: #6b3440;
+    background: #381c27;
+    color: #fda4af;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #0c1424;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.stat-value {
+    margin-top: 5px;
+    font-size: 23px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.target-info {
+    margin-bottom: 20px;
+    padding: 13px 15px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: #0c1424;
+    font-size: 13px;
+}
+
+.target-info strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.target-info a {
+    overflow-wrap: anywhere;
+}
+
+a {
+    color: #a5b4fc;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #c7d2fe;
+    text-decoration: underline;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: fit-content;
+    margin-top: 18px;
+    cursor: pointer;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 18px;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.small {
+    font-size: 12px;
+}
+
+.empty-state {
+    padding: 40px 20px;
+    border: 1px dashed #334155;
+    border-radius: 14px;
+    color: var(--muted);
+    text-align: center;
+}
+
+.message {
+    margin-top: 12px;
+    color: #fca5a5;
+    font-size: 13px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#app {
+    display: none;
+}
+
+#login {
+    display: none;
+}
+
+#app.authenticated {
+    display: block;
+}
+
+#login.visible {
+    display: block;
+}
+
+@media (max-width: 760px) {
+    body {
+        padding: 24px 14px 40px;
+    }
+
+    header {
+        align-items: flex-start;
+    }
+
+    .create-grid,
+    .grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 15px;
+    }
+
+    .card {
+        padding: 20px 16px;
+        border-radius: 13px;
+    }
+
+    .login-card {
+        margin: 35px auto;
+        padding: 25px 19px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    .stat {
+        padding: 10px 8px;
+    }
+
+    .stat-value {
+        font-size: 19px;
+    }
+
+    .stat-label {
+        font-size: 10px;
+    }
+
+    .actions button {
+        flex: 1 1 130px;
+    }
+
+    .toolbar {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 420px) {
+    header {
+        flex-direction: column;
+    }
+
+    .toolbar {
+        flex-direction: column;
+    }
+
+    .toolbar-actions {
+        width: 100%;
+    }
+
+    .toolbar-actions button {
+        flex: 1;
+    }
+
+    .link-heading {
+        flex-wrap: wrap;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-value {
+        font-size: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+    <div>
+        <h1>Click <span>Rotation</span></h1>
+        <p class="subtitle">Admin dashboard · Manage short links and target rotation</p>
+    </div>
+</header>
+
+<!-- Login -->
+<section id="login" class="card login-card">
+    <div class="login-icon">⌁</div>
+    <h2>Welcome back</h2>
+    <p class="muted small">Sign in to manage your short links.</p>
+
+    <form id="loginForm">
+        <label for="password">Admin password</label>
+        <input
+            id="password"
+            type="password"
+            placeholder="Enter your admin password"
+            autocomplete="current-password"
+            required
+        >
+
+        <br><br>
+        <button id="loginBtn" type="submit" style="width:100%">
+            Sign in to dashboard →
+        </button>
+        <p id="loginMsg" class="message" role="alert"></p>
+    </form>
+</section>
+
+<!-- Dashboard -->
+<section id="app">
+
+    <div class="card">
+        <div class="toolbar">
+            <div>
+                <h2>Create short link</h2>
+                <p class="muted small">Set a unique slug and click rotation limit.</p>
+            </div>
+            <div class="toolbar-actions">
+                <button type="button" class="secondary" id="refreshBtn">↻ Refresh</button>
+                <button type="button" class="secondary" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+        <form id="createForm">
+            <div class="grid create-grid">
+                <label for="newName">
+                    Link name
+                    <input id="newName" placeholder="e.g. Campaign Links" required>
+                </label>
+
+                <label for="newSlug">
+                    Short link slug
+                    <input
+                        id="newSlug"
+                        placeholder="e.g. campaign"
+                        pattern="[A-Za-z0-9_-]+"
+                        title="Use letters, numbers, underscores or hyphens"
+                        required
+                    >
+                </label>
+
+                <label for="newLimit">
+                    Click limit per target
+                    <input id="newLimit" type="number" min="1" value="300" required>
+                </label>
+            </div>
+
+            <br>
+            <button id="createBtn" type="submit">＋ Create short link</button>
+            <p id="createMsg" class="message" role="alert"></p>
+        </form>
+    </div>
+
+    <div class="toolbar">
+        <div>
+            <h2>Your short links</h2>
+            <p class="muted small">Manage destinations, limits and link status.</p>
+        </div>
+        <span id="linkCount" class="muted small">0 links</span>
+    </div>
+
+    <div id="links">
+        <div class="empty-state">Loading your links...</div>
+    </div>
+</section>
+</div>
+
+<script>
+'use strict';
+
+const $ = id => document.getElementById(id);
+
+let busy = false;
+
+async function req(url, opts = {}) {
+    const response = await fetch(url, {
+        ...opts,
+        credentials: 'same-origin',
+        headers: {
+            ...(opts.headers || {}),
+            'Accept': 'application/json'
+        }
+    });
+
+    let data = {};
+
+    try {
+        data = await response.json();
+    } catch {}
+
+    if (!response.ok || data.ok === false) {
+        throw new Error(data.error || 'Request failed');
+    }
+
+    return data;
+}
+
+function showLogin() {
+    $('login').classList.add('visible');
+    $('app').classList.remove('authenticated');
+}
+
+function showApp() {
+    $('login').classList.remove('visible');
+    $('app').classList.add('authenticated');
+}
+
+async function checkSession() {
+    try {
+        const data = await req('api.php?action=check');
+
+        if (data.logged_in) {
+            showApp();
+            await load();
+        } else {
+            showLogin();
+        }
+    } catch (error) {
+        showLogin();
+        $('loginMsg').textContent = error.message;
+    }
+}
+
+$('loginForm').addEventListener('submit', async event => {
+    event.preventDefault();
+
+    if (busy) return;
+    busy = true;
+    $('loginBtn').disabled = true;
+    $('loginMsg').textContent = '';
+
+    try {
+        await req('api.php?action=login', {
+            method: 'POST',
+            body: new URLSearchParams({
+                password: $('password').value
+            })
+        });
+
+        $('password').value = '';
+        showApp();
+        await load();
+    } catch (error) {
+        $('loginMsg').textContent = error.message;
+    } finally {
+        busy = false;
+        $('loginBtn').disabled = false;
+    }
+});
+
+$('logoutBtn').addEventListener('click', async () => {
+    try {
+        await req('api.php?action=logout', {
+            method: 'POST'
+        });
+    } catch (error) {
+        alert('Logout failed: ' + error.message);
+        return;
+    }
+
+    $('links').innerHTML = '';
+    $('password').value = '';
+    showLogin();
+});
+
+$('refreshBtn').addEventListener('click', load);
+
+$('createForm').addEventListener('submit', async event => {
+    event.preventDefault();
+
+    const button = $('createBtn');
+    button.disabled = true;
+    $('createMsg').textContent = '';
+
+    try {
+        await req('api.php?action=create', {
+            method: 'POST',
+            body: new URLSearchParams({
+                name: $('newName').value.trim(),
+                slug: $('newSlug').value.trim(),
+                click_limit: $('newLimit').value
+            })
+        });
+
+        $('newName').value = '';
+        $('newSlug').value = '';
+        $('newLimit').value = '300';
+
+        $('createMsg').style.color = '#86efac';
+        $('createMsg').textContent = 'Short link created successfully.';
+
+        await load();
+    } catch (error) {
+        $('createMsg').style.color = '#fca5a5';
+        $('createMsg').textContent = error.message;
+    } finally {
+        button.disabled = false;
+    }
+});
+
+async function load() {
+    try {
+        const data = await req('api.php?action=list');
+        render(data.links || []);
+    } catch (error) {
+        $('links').innerHTML = '';
+
+        const message = document.createElement('div');
+        message.className = 'empty-state';
+        message.textContent = error.message;
+        $('links').appendChild(message);
+
+        if (error.message.toLowerCase().includes('unauthorized')) {
+            showLogin();
+        }
+    }
+}
+
+function render(links) {
+    $('linkCount').textContent =
+        `${links.length} ${links.length === 1 ? 'link' : 'links'}`;
+
+    $('links').innerHTML = '';
+
+    if (!links.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.textContent = 'No short links yet. Create your first one above.';
+        $('links').appendChild(empty);
+        return;
+    }
+
+    for (const link of links) {
+        const slug = String(link.slug || '');
+        const targets = (link.targets || []).map(target => target.url).join('\n');
+        const limit = Number(link.click_limit || 0);
+        const currentClicks = Number(link.clicks_in_current_target || 0);
+        const totalClicks = Number(link.total_clicks || 0);
+        const remaining = Math.max(0, limit - currentClicks);
+        const currentIndex = Number(link.current_index || 0);
+        const currentTarget = link.targets?.[currentIndex]?.url || 'No target set';
+
+        const shortUrl = new URL(
+            location.pathname.replace(/admin\.html$/, '') +
+            encodeURIComponent(slug),
+            location.origin
+        ).href;
+
+        const card = document.createElement('article');
+        card.className = 'card';
+
+        const heading = document.createElement('div');
+        heading.className = 'link-heading';
+
+        const titleWrap = document.createElement('div');
+        const title = document.createElement('h2');
+        title.textContent = link.name || slug;
+
+        const slugText = document.createElement('div');
+        slugText.className = 'slug';
+        slugText.textContent = '/' + slug;
+
+        titleWrap.append(title, slugText);
+
+        const status = document.createElement('span');
+        status.className = 'status' + (link.enabled ? '' : ' disabled');
+        status.textContent = link.enabled ? 'Enabled' : 'Disabled';
+
+        heading.append(titleWrap, status);
+        card.appendChild(heading);
+
+        const stats = document.createElement('div');
+        stats.className = 'stats';
+
+        stats.append(
+            makeStat('Total clicks', totalClicks),
+            makeStat('Current target', currentClicks),
+            makeStat('Clicks remaining', remaining)
+        );
+
+        card.appendChild(stats);
+
+        const targetInfo = document.createElement('div');
+        targetInfo.className = 'target-info';
+
+        const targetLabel = document.createElement('strong');
+        targetLabel.textContent = 'Short link & current target';
+
+        const shortAnchor = document.createElement('a');
+        shortAnchor.href = shortUrl;
+        shortAnchor.target = '_blank';
+        shortAnchor.rel = 'noopener noreferrer';
+        shortAnchor.textContent = shortUrl;
+
+        const currentText = document.createElement('div');
+        currentText.className = 'muted small';
+        currentText.style.marginTop = '10px';
+        currentText.textContent = 'Current target: ' + currentTarget;
+
+        targetInfo.append(targetLabel, shortAnchor, currentText);
+        card.appendChild(targetInfo);
+
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+
+        const nameLabel = document.createElement('label');
+        nameLabel.textContent = 'Link name';
+
+        const nameInput = document.createElement('input');
+        nameInput.value = link.name || '';
+        nameInput.id = fieldId(slug, 'name');
+        nameInput.maxLength = 150;
+        nameLabel.appendChild(nameInput);
+
+        const limitLabel = document.createElement('label');
+        limitLabel.textContent = 'Click limit per target';
+
+        const limitInput = document.createElement('input');
+        limitInput.type = 'number';
+        limitInput.min = '1';
+        limitInput.max = '1000000000';
+        limitInput.value = limit || 300;
+        limitInput.id = fieldId(slug, 'limit');
+        limitLabel.appendChild(limitInput);
+
+        grid.append(nameLabel, limitLabel);
+        card.appendChild(grid);
+
+        const targetsLabel = document.createElement('label');
+        targetsLabel.style.marginTop = '18px';
+        targetsLabel.textContent = 'Target URLs — one per line';
+
+        const targetsInput = document.createElement('textarea');
+        targetsInput.value = targets;
+        targetsInput.id = fieldId(slug, 'targets');
+        targetsInput.spellcheck = false;
+        targetsInput.placeholder = 'https://example.com/offer-1\nhttps://example.com/offer-2';
+
+        targetsLabel.appendChild(targetsInput);
+        card.appendChild(targetsLabel);
+
+        const enabledLabel = document.createElement('label');
+        enabledLabel.className = 'checkbox-row';
+
+        const enabledInput = document.createElement('input');
+        enabledInput.type = 'checkbox';
+        enabledInput.checked = Boolean(link.enabled);
+        enabledInput.id = fieldId(slug, 'enabled');
+
+        const enabledText = document.createElement('span');
+        enabledText.textContent = 'Enable this short link';
+
+        enabledLabel.append(enabledInput, enabledText);
+        card.appendChild(enabledLabel);
+
+        const actions = document.createElement('div');
+        actions.className = 'actions';
+
+        const saveButton = makeButton('Save changes', async () => {
+            await saveLink(slug);
+        });
+
+        const resetButton = makeButton('↻ Reset rotation', async () => {
+            await resetLink(slug);
+        }, 'secondary');
+
+        const deleteButton = makeButton('Delete link', async () => {
+            await deleteLink(slug);
+        }, 'danger');
+
+        actions.append(saveButton, resetButton, deleteButton);
+        card.appendChild(actions);
+
+        $('links').appendChild(card);
+    }
+}
+
+function makeStat(label, value) {
+    const box = document.createElement('div');
+    box.className = 'stat';
+
+    const labelEl = document.createElement('div');
+    labelEl.className = 'stat-label';
+    labelEl.textContent = label;
+
+    const valueEl = document.createElement('div');
+    valueEl.className = 'stat-value';
+    valueEl.textContent = Number(value).toLocaleString();
+
+    box.append(labelEl, valueEl);
+    return box;
+}
+
+function makeButton(text, callback, style = '') {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = text;
+
+    if (style) button.classList.add(style);
+
+    button.addEventListener('click', async () => {
+        if (button.disabled) return;
+
+        button.disabled = true;
+
+        try {
+            await callback();
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    return button;
+}
+
+function fieldId(slug, field) {
+    return field + '-' + slug;
+}
+
+async function saveLink(slug) {
+    const name = $(fieldId(slug, 'name')).value.trim();
+    const limit = $(fieldId(slug, 'limit')).value;
+    const targets = $(fieldId(slug, 'targets')).value;
+    const enabled = $(fieldId(slug, 'enabled')).checked ? '1' : '0';
+
+    await req('api.php?action=save', {
+        method: 'POST',
+        body: new URLSearchParams({
+            slug,
+            name,
+            click_limit: limit,
+            targets,
+            enabled
+        })
+    });
+
+    await load();
+}
+
+async function resetLink(slug) {
+    if (!confirm('Reset all clicks and start again from the first target?')) {
+        return;
+    }
+
+    await req('api.php?action=reset', {
+        method: 'POST',
+        body: new URLSearchParams({ slug })
+    });
+
+    await load();
+}
+
+async function deleteLink(slug) {
+    if (!confirm('Permanently delete this short link?')) {
+        return;
+    }
+
+    await req('api.php?action=delete', {
+        method: 'POST',
+        body: new URLSearchParams({ slug })
+    });
+
+    await load();
+}
+
+// Restore the PHP login session on every page load.
+document.addEventListener('DOMContentLoaded', checkSession);
+</script>
+</body>
+</html>
